@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .menu {
+            float: left;
+            width: 20%;
+        }
+
+        .menuitem {
+            padding: 8px;
+            margin-top: 7px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .main {
+            float: left;
+            width: 100%;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        .right {
+            background-color: lightblue;
+            float: left;
+            width: 20%;
+            padding: 10px 15px;
+            margin-top: 7px;
+        }
+
+        @media only screen and (max-width:800px) {
+            .main {
+                width: 80%;
+                padding: 0;
+            }
+
+            .right {
+                width: 100%;
+            }
+        }
+
+        @media only screen and (max-width:500px) {
+
+            .menu,
+            .main,
+            .right {
+                width: 100%;
+            }
+        }
+
+        .grid {
+            width: 100%;
+            height: 90%;
+        }
+
+        .grid td {
+            cursor: pointer;
+            height: 4vw;
+            width: 4vw;
+            border: 1px solid #ccc;
+            text-align: center;
+            font-family: sans-serif;
+            font-size: 3vw;
+        }
+
+        .grid td.clicked {
+            background-color: yellow;
+            color: red;
+        }
+    </style>
+
+
+    <script>
+        function startTimer(duration, display) {
+            var timer = duration, minutes, seconds;
+            setInterval(function () {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = "Time remaining: " + seconds;
+
+                if (--timer < 0) {
+                    timer = duration;
+                }
+            }, 1000);
+        }
+
+        window.onload = function () {
+
+            var lastClickedTile;
+            var lastClickedLetter;
+
+            var grid = clickableGrid(15, 15, function (el, row, col) {
+                if (lastClickedLetter) {
+                    if (el.textContent != '')
+                        return;
+
+                    el.textContent = lastClickedLetter.textContent;
+                    el.className = 'clicked';
+                    if (lastClickedTile) {
+                        lastClickedTile.textContent = '';
+                        lastClickedTile.className = '';
+                    }
+                    lastClickedTile = el;
+                }
+            });
+
+            function clickableGrid(rows, cols, callback) {
+                var grid = document.getElementById("board");
+                grid.className = 'grid';
+                for (var r = 0; r < rows; ++r) {
+                    var tr = grid.appendChild(document.createElement('tr'));
+                    for (var c = 0; c < cols; ++c) {
+                        var cell = tr.appendChild(document.createElement('td'));
+                        cell.innerHTML = '';
+                        cell.addEventListener('click', (function (el, r, c) {
+                            return function () { callback(el, r, c); }
+                        })(cell, r, c), false);
+                    }
+                }
+                return grid;
+            }
+
+            var grid = clickableLetters(2, 13, function (el, row, col) {
+                el.className = 'clicked';
+                if (lastClickedLetter) {
+                    lastClickedLetter.className = '';
+
+                    lastClickedTile.className = '';
+                    lastClickedTile = '';
+                }
+                lastClickedLetter = el;
+            });
+
+            function clickableLetters(rows, cols, callback) {
+                var i = 0;
+                var grid = document.getElementById("letters");
+                grid.className = 'grid';
+                for (var r = 0; r < rows; ++r) {
+                    var tr = grid.appendChild(document.createElement('tr'));
+                    for (var c = 0; c < cols; ++c) {
+                        var cell = tr.appendChild(document.createElement('td'));
+                        cell.innerHTML = String.fromCharCode(65 + i++);
+                        cell.addEventListener('click', (function (el, r, c) {
+                            return function () { callback(el, r, c); }
+                        })(cell, r, c), false);
+                    }
+                }
+                return grid;
+            }
+
+            var thirtySeconds = 59, display = document.querySelector('#timer');
+            startTimer(thirtySeconds, display);
+        };
+    </script>
+
+    </style>
+</head>
+
+<body style="font-family:Verdana;">
+    <div style="overflow:auto">
+        <div class="main">
+            <div style="background-color:#f1f1f1;padding:15px;text-align: center;">
+                <h1 id="timer">Time remaining: 60</h1>
+            </div>
+            <br>
+            <table id="board"></table>
+            <hr>
+            <br>
+            <table id="letters"></table>
+            <hr>
+            <button style="float:right;">Submit</button>
+            <button style="float:right;">Reset</button>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
