@@ -1,0 +1,70 @@
+<modifier_tiles>
+	<double_words>
+		<location> 1,1 </location>
+		<location> 2,2 </location>
+		<location> 3,3 </location>
+		<location> 4,4 </location>
+		<location> 13,13 </location>
+		<location> 12,12 </location>
+		<location> 11,11 </location>
+		<location> 10,10 </location>
+		<location> 13,1 </location>
+		<location> 12,2 </location>
+		<location> 11,3 </location>
+		<location> 10,4 </location>
+		<location> 1,13 </location>
+		<location> 2,12 </location>
+		<location> 3,11 </location>
+		<location> 4,10 </location>	
+	</double_words>
+	<triple_words>
+		<location> 0,0 </location>
+		<location> 14,0 </location>
+		<location> 0,14 </location>
+		<location> 14,14 </location>
+	</triple_words>
+	<double_letter>
+		<location> 3,0 </location>
+		<location> 11,0 </location>
+		<location> 6,2 </location>
+		<location> 8,2 </location>
+		<location> 0,3 </location>
+		<location> 7,3 </location>
+		<location> 14,3 </location>
+		<location> 2,6 </location>
+		<location> 6,6 </location>
+		<location> 8,6 </location>
+		<location> 12,6 </location>
+		<location> 3,7 </location>
+		<location> 11,7 </location>
+		<location> 5,13 </location>
+		<location> 2,8 </location>
+		<location> 6,8 </location>
+		<location> 8,8 </location>
+		<location> 12,8 </location>
+		<location> 0,11 </location>
+		<location> 7,11 </location>
+		<location> 14,11 </location>
+		<location> 6,12 </location>
+		<location> 8,12 </location>
+		<location> 3,14 </location>
+		<location> 11,14 </location>
+	</double_letter>
+	<triple_letter>
+		<location> 5,1 </location>
+		<location> 9,1 </location>
+		<location> 1,5 </location>
+		<location> 5,5 </location>
+		<location> 9,5 </location>
+		<location> 13,5 </location>
+		<location> 1,9 </location>
+		<location> 5,9 </location>
+		<location> 9,9 </location>
+		<location> 13,9 </location>
+		<location> 5,13 </location>
+		<location> 9,13 </location>	
+	</triple_letter>
+	<home>
+		<location> 7,7 </location>
+	</home>
+</modifier_tiles>
