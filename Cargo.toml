@@ -1,0 +1,7 @@
+[package]
+name = "couch_word_party"
+version = "0.1.0"
+authors = ["Mark Clifton"]
+edition = "2018"
+
+[dependencies]
