@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        .menu {
+            float: left;
+            width: 20%;
+        }
+
+        .menuitem {
+            padding: 8px;
+            margin-top: 7px;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .main {
+            float: left;
+            width: 100%;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        .right {
+            background-color: lightblue;
+            float: left;
+            width: 20%;
+            padding: 10px 15px;
+            margin-top: 7px;
+        }
+
+        @media only screen and (max-width:800px) {
+            .main {
+                width: 80%;
+                padding: 0;
+            }
+
+            .right {
+                width: 100%;
+            }
+        }
+
+        @media only screen and (max-width:500px) {
+
+            .menu,
+            .main,
+            .right {
+                width: 100%;
+            }
+        }
+
+        .grid {
+            width: 100%;
+            height: 90%;
+        }
+
+        .grid td {
+            cursor: pointer;
+            height: 4vw;
+            width: 4vw;
+            text-align: left;
+            font-family: sans-serif;
+            font-size: 3vw;
+        }
+
+        .grid td.clicked {
+            background-color: yellow;
+            color: red;
+        }
+    </style>
+
+    <script>
+        window.onload = function () {
+
+            var lastClickedTile;
+
+            var grid = clickableLetters(10, 1, function (el, row, col) {
+                lastClickedLetter = el;
+            });
+
+            function clickableLetters(rows, cols, callback) {
+                var i = 0;
+                var grid = document.getElementById("letters");
+                grid.className = 'grid';
+                for (var r = 0; r < rows; ++r) {
+                    var tr = grid.appendChild(document.createElement('tr'));
+                    for (var c = 0; c < cols; ++c) {
+                        var userCell = tr.appendChild(document.createElement('td'));
+                        userCell.innerHTML = "Player " + ++i;
+
+                        var scoreCell = tr.appendChild(document.createElement('td'));
+                        scoreCell.innerHTML = "100";
+                    }
+                }
+                return grid;
+            }
+        };
+    </script>
+
+    </style>
+</head>
+
+<body style="font-family:Verdana;">
+    <div style="overflow:auto">
+        <div class="main">
+            <div style="background-color:#f1f1f1;padding:15px;text-align: center;">
+                <h1 id="waitBanner">Waiting on Player 1</h1>
+            </div>
+            <hr>
+            <table id="letters"></table>
+            <hr>
+        </div>
+    </div>
+</body>
+
+</html>

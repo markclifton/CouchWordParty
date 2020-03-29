@@ -17,7 +17,7 @@ impl Handler for Server {
             "/" => Ok(Response::new(
                 200,
                 "OK",
-                get_file_as_byte_vec(&String::from("resources/html/activeSCreen.html")),
+                get_file_as_byte_vec(&String::from("resources/html/waitingScreen.html")),
             )),
 
             _ => Ok(Response::new(404, "Not Found", b"404 - Not Found".to_vec())),
@@ -26,7 +26,6 @@ impl Handler for Server {
 
     // Handle messages recieved in the websocket (in this case, only on /ws)
     fn on_message(&mut self, msg: Message) -> Result<()> {
-        // Broadcast to all connections
         self.out.broadcast(msg)
     }
 }
@@ -42,5 +41,5 @@ fn get_file_as_byte_vec(filename: &String) -> Vec<u8> {
 
 fn main() {
     // Listen on an address and call the closure for each connection
-    listen("192.168.1.2:8000", |out| Server { out }).unwrap()
+    listen("192.168.1.2:8000", |out| Server { out: out }).unwrap()
 }
