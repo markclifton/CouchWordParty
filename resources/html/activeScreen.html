@@ -2,71 +2,42 @@
 <html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        .menu {
-            float: left;
-            width: 20%;
-        }
-
-        .menuitem {
-            padding: 8px;
-            margin-top: 7px;
-            border-bottom: 1px solid #f1f1f1;
-        }
-
-        .main {
-            float: left;
-            width: 100%;
-            padding: 0 20px;
-            overflow: hidden;
-        }
-
-        .right {
-            background-color: lightblue;
-            float: left;
-            width: 20%;
-            padding: 10px 15px;
-            margin-top: 7px;
-        }
-
-        @media only screen and (max-width:800px) {
-            .main {
-                width: 80%;
-                padding: 0;
-            }
-
-            .right {
-                width: 100%;
-            }
-        }
-
-        @media only screen and (max-width:500px) {
-
-            .menu,
-            .main,
-            .right {
-                width: 100%;
-            }
-        }
-
-        .grid {
+        .gridLetters {
             width: 100%;
             height: 90%;
         }
 
-        .grid td {
+        .gridLetters td {
             cursor: pointer;
-            height: 4vw;
-            width: 4vw;
+            height: 4vmin;
+            width: 4vmin;
             border: 1px solid #ccc;
             text-align: center;
             font-family: sans-serif;
-            font-size: 3vw;
+            font-size: 2vmin;
+        }
+
+        .gridLetters td.clicked {
+            background-color: yellow;
+            color: red;
+        }
+
+        .grid {
+            width: 90vmin;
+            height: 90vmin;
+            background-size: 90vmin;
+            background-repeat: no-repeat;
+        }
+
+        .grid td {
+            cursor: pointer;
+            height: 4vmin;
+            width: 4vmin;
+            border: 0px solid #ccc;
+            text-align: center;
+            font-family: sans-serif;
+            font-size: 2vmin;
         }
 
         .grid td.clicked {
@@ -75,27 +46,8 @@
         }
     </style>
 
-
     <script>
-        function startTimer(duration, display) {
-            var timer = duration, minutes, seconds;
-            setInterval(function () {
-                minutes = parseInt(timer / 60, 10);
-                seconds = parseInt(timer % 60, 10);
-
-                minutes = minutes < 10 ? "0" + minutes : minutes;
-                seconds = seconds < 10 ? "0" + seconds : seconds;
-
-                display.textContent = "Time remaining: " + seconds;
-
-                if (--timer < 0) {
-                    timer = duration;
-                }
-            }, 1000);
-        }
-
         window.onload = function () {
-
             var lastClickedTile;
             var lastClickedLetter;
 
@@ -131,20 +83,23 @@
             }
 
             var grid = clickableLetters(2, 13, function (el, row, col) {
-                el.className = 'clicked';
                 if (lastClickedLetter) {
                     lastClickedLetter.className = '';
+                }
 
+                if (lastClickedTile) {
                     lastClickedTile.className = '';
                     lastClickedTile = '';
                 }
+
+                el.className = 'clicked';
                 lastClickedLetter = el;
             });
 
             function clickableLetters(rows, cols, callback) {
                 var i = 0;
                 var grid = document.getElementById("letters");
-                grid.className = 'grid';
+                grid.className = 'gridLetters';
                 for (var r = 0; r < rows; ++r) {
                     var tr = grid.appendChild(document.createElement('tr'));
                     for (var c = 0; c < cols; ++c) {
@@ -157,10 +112,24 @@
                 }
                 return grid;
             }
-
-            var thirtySeconds = 59, display = document.querySelector('#timer');
-            startTimer(thirtySeconds, display);
         };
+    </script>
+
+    <script src="/resources/js/iframed.js"></script>
+    <script>
+        function active_onopen(e, key, ws) {
+            alert("active_onopen - Connection is opened");
+        }
+
+        function active_onmessage(e, key, ws) {
+            alert("active_onmessage - New message");
+        }
+
+        connectWebSocket.call(window.parent, window.parent, 'active', active_onopen.toString(), active_onmessage.toString());
+
+        function sendWordRaw() {
+            sendWord.call(window.parent, window.parent);
+        }
     </script>
 
     </style>
@@ -172,11 +141,11 @@
             <div style="background-color:#f1f1f1;padding:15px;text-align: center;">
                 <h1 id="timer">Time remaining: 60</h1>
             </div>
-            <table id="board"></table>
+            <table id="board" align="center" background="/resources/Board/Board.png"></table>
             <hr>
             <table id="letters"></table>
             <hr>
-            <button style="float:right;">Submit</button>
+            <button style="float:right;" onclick="sendWordRaw()">Submit</button>
             <button style="float:right;">Reset</button>
         </div>
 

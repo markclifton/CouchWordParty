@@ -4,5 +4,14 @@ version = "0.1.0"
 authors = ["Mark Clifton"]
 edition = "2018"
 
-[dependencies]
-ws = "0.9.1"
+[dependencies.rocket]
+version = "0.4.4"
+
+[dependencies.rocket_contrib]
+version = "0.4.4"
+
+[dependencies.ws]
+version = "0.9.1"
+
+[dependencies.json]
+version = "0.12.4"
